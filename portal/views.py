@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
 from .filters import NewsFilter
 from .forms import PostForm
-from .models import Post, Category
+from .models import Post
 
 
 class NewsList(ListView):
@@ -29,7 +29,8 @@ class NewsDetail(DetailView):
     template_name = 'news_detail.html'
     context_object_name = 'news_detail'
 
-class Publication_Create(CreateView):
+
+class PublicationCreate(CreateView):
     form_class = PostForm
     model = Post
     template_name = "publication_edit.html"
@@ -42,7 +43,8 @@ class Publication_Create(CreateView):
             _var.field_choice = "AR"
         return super().form_valid(form)
 
-class Publication_Update(UpdateView):
+
+class PublicationUpdate(UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'publication_edit.html'
@@ -55,9 +57,8 @@ class Publication_Update(UpdateView):
             _var.field_choice = "AR"
         return super().form_valid(form)
 
-class Publication_Delete(DeleteView):
+
+class PublicationDelete(DeleteView):
     model = Post
     template_name = 'publication_delete.html'
     success_url = reverse_lazy('detail_news')
-
-
