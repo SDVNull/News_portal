@@ -7,6 +7,11 @@
 
 {% block content %}
 <h2>Количество новостей: {{news_list|length}}</h2>
+    
+    <form method="get">
+    {{ filterset.form.as_p }}
+    <button type="submit">Фильтровать</button>
+    </form>
 <h2>{{news_detail}}</h2>
 <hr>
     <table>
@@ -17,10 +22,33 @@
         </tr>
         {% for news in news_list %}
         <tr>
-            <td>{{ news.header | correct_words }}</td>
+            <td>{{ news.header }}</td>
             <td>{{ news.time_in | date:'M d Y' }}</td>
-            <td>{{ news.content | truncatechars:20 | correct_words }}</td>
+            <td> {{ news.content | truncatechars:100 }}</td>
         </tr>
         {% endfor %}
     </table>
+    
+       {# Добавляем пагинацию на страницу #}
+
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   {{ page_obj.number }}
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
 {% endblock content %}

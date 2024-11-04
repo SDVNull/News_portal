@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.urls import reverse
 
 
 class Author(models.Model):
@@ -8,6 +9,10 @@ class Author(models.Model):
         User, on_delete=models.CASCADE, related_name="author"
     )
     rating = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Автор"
+        verbose_name_plural = "Авторы"
 
     def __str__(self):
         return f"Имя автора: {self.author_user}"
@@ -54,10 +59,17 @@ class Post(models.Model):
     ]
     field_choice = models.CharField(max_length=2, choices=CHOICE, default="NW")
     time_in = models.DateTimeField(auto_now_add=True)
-    post_category = models.ManyToManyField(Category, through="PostCategory")
-    header = models.CharField(max_length=50)
+    post_category = models.ManyToManyField(Category, through="PostCategory", related_name="category")
+    header = models.CharField(max_length=150)
     content = models.TextField()
     rating = models.IntegerField(default=0)
+
+    def get_absolute_url(self):
+        return reverse('detail_news', args=[str(self.id)])
+
+    class Meta:
+        verbose_name = "Публикация"
+        verbose_name_plural = "Публикации"
 
     def like(self):
         self.rating = self.rating + 1
