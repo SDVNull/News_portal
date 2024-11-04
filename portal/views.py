@@ -11,7 +11,7 @@ class NewsList(ListView):
     ordering = '-time_in'
     template_name = 'news.html'
     context_object_name = 'news_list'
-    paginate_by = 3
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = super().get_queryset()
