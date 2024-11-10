@@ -1,6 +1,8 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
 from .filters import NewsFilter
 from .forms import PostForm
 from .models import Post
@@ -30,7 +32,8 @@ class NewsDetail(DetailView):
     context_object_name = 'news_detail'
 
 
-class PublicationCreate(CreateView):
+class PublicationCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('portal.add_post',)
     form_class = PostForm
     model = Post
     template_name = "publication_edit.html"
@@ -44,7 +47,8 @@ class PublicationCreate(CreateView):
         return super().form_valid(form)
 
 
-class PublicationUpdate(UpdateView):
+class PublicationUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('portal.change_post',)
     form_class = PostForm
     model = Post
     template_name = 'publication_edit.html'
@@ -58,7 +62,8 @@ class PublicationUpdate(UpdateView):
         return super().form_valid(form)
 
 
-class PublicationDelete(DeleteView):
+class PublicationDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('portal.delete_post',)
     model = Post
     template_name = 'publication_delete.html'
     success_url = reverse_lazy('detail_news')
