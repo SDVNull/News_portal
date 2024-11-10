@@ -14,7 +14,7 @@
     </form>
     <h2>{{ news_detail }}</h2>
     <hr>
-        {% if perms.portal.add_product %}
+        {% if perms.portal.add_post %}
     <a href="{% url 'publication_create' %}">Добавить публикацию</a>
     {% endif %}
     <table>
