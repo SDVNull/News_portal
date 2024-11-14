@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import NewsList, NewsDetail, PublicationCreate, PublicationUpdate, PublicationDelete
+from .views import NewsList, NewsDetail, PublicationCreate, PublicationUpdate, PublicationDelete, subscriptions
 
 app_name = 'portal'
 
@@ -12,4 +12,5 @@ urlpatterns = [
    path('article/create/', PublicationCreate.as_view(), name='publication_create'),
    path('article/<int:pk>/edit/', PublicationUpdate.as_view(), name='publication_update'),
    path('article/<int:pk>/delete/', PublicationDelete.as_view(), name='publication_delete'),
+   path('subscriptions/', subscriptions, name='subscriptions'),
 ]

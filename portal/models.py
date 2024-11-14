@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 from django.db.models import Sum
 from django.urls import reverse
 
@@ -60,7 +60,7 @@ class Post(models.Model):
     ]
     field_choice = models.CharField(max_length=2, choices=CHOICE, default="NW")
     time_in = models.DateTimeField(auto_now_add=True)
-    post_category = models.ManyToManyField(Category, through="PostCategory", related_name="category")
+    category = models.ManyToManyField(Category, through="PostCategory")
     header = models.CharField(max_length=150)
     content = models.TextField()
     rating = models.IntegerField(default=0)
@@ -90,11 +90,6 @@ class Post(models.Model):
         return self.__str__()
 
 
-class PostCategory(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-
-
 class Comment(models.Model):
     comment_post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user_comment = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -109,3 +104,13 @@ class Comment(models.Model):
     def dislike(self):
         self.rating = self.rating - 1
         self.save()
+
+
+class PostCategory(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='subscriptions')
+    category = models.ForeignKey(to='Category', on_delete=models.CASCADE, related_name='subscriptions')

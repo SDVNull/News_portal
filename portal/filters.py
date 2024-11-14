@@ -19,5 +19,5 @@ class NewsFilter(FilterSet):
     class Meta:
         model = Post
         fields = {
-            'post_category': ['exact'],
+            'category': ['exact'],
         }
