@@ -8,5 +8,5 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["author", "header", "content"]
+        fields = ["author", "header", "content", "category"]
 

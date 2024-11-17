@@ -15,7 +15,7 @@
     <h2>{{ news_detail }}</h2>
     <hr>
     {% if perms.portal.add_post %}
-        <a href="{% url 'publication_create' %}">Добавить публикацию</a>
+        <a href="{% url 'portal:publication_create' %}">Добавить публикацию</a>
     {% endif %}
     <table>
         <tr>
@@ -29,20 +29,18 @@
                 <td>{{ news.time_in | date:'M d Y' }}</td>
                 <td> {{ news.content | truncatechars:100 }}</td>
             </tr>
-
-            <td>
-                {% if perms.portal.change_post %}
-                    <a href="{% url 'publication_update' pk=news.id %}">Изменить</a>
-                {% endif %}
-                {% if perms.portal.delete_post %}
-                    <a href="{% url 'publication_delete' news.id %}">Удалить</a>
-                {% endif %}
-            </td>
-
+            
+                <td>
+                    {% if perms.portal.change_post %}
+                    <a href="{% url 'portal:publication_update' pk=news.id %}">Изменить</a>
+                    {% endif %}
+                    {% if perms.portal.delete_post %}
+                    <a href="{% url 'portal:publication_delete' news.id %}">Удалить</a>
+                    {% endif %}
+                </td>
+            
         {% endfor %}
     </table>
-
-    {# Пагинация #}
 
     {% if page_obj.has_previous %}
         <a href="?page=1">1</a>

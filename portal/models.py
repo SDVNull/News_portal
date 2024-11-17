@@ -15,10 +15,7 @@ class Author(models.Model):
         verbose_name_plural = "Авторы"
 
     def __str__(self):
-        return f"Имя автора: {self.author_user}"
-
-    def __repr__(self):
-        return self.__str__()
+        return f'{self.author_user.username}'
 
     def update_rating(self):
         post_rating = self.post_set.aggregate(p_rating=Sum("rating")).get("p_rating")
@@ -42,7 +39,6 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    subscriber = models.ManyToManyField(User, related_name="subscriber", blank=True)
 
     def __str__(self):
         return f"Категория: {self.name}"
@@ -66,7 +62,7 @@ class Post(models.Model):
     rating = models.IntegerField(default=0)
 
     def get_absolute_url(self):
-        return reverse('detail_news', args=[str(self.id)])
+        return reverse('portal:detail_news', args=[str(self.id)])
 
     class Meta:
         verbose_name = "Публикация"
@@ -107,8 +103,8 @@ class Comment(models.Model):
 
 
 class PostCategory(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
 class Subscription(models.Model):
