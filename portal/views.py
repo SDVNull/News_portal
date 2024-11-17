@@ -69,7 +69,7 @@ class PublicationDelete(PermissionRequiredMixin, DeleteView):
     permission_required = ('portal.delete_post',)
     model = Post
     template_name = 'publication_delete.html'
-    success_url = reverse_lazy('detail_news')
+    success_url = reverse_lazy('portal:list_news')
 
 
 @login_required

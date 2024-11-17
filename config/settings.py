@@ -22,7 +22,8 @@ APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
-    'allauth.socialaccount.providers.telegram'
+    'allauth.socialaccount.providers.telegram',
+    'django_apscheduler',
 ]
 
 MY_APPS = [
@@ -114,7 +115,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 LOGIN_REDIRECT_URL = "/list"
-
+SITE_URL = '127.0.0.1:8000'
 LOGOUT_REDIRECT_URL = "/accounts/login/"
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
