@@ -21,6 +21,7 @@ APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -28,6 +29,7 @@ APPS = [
     'allauth.socialaccount.providers.telegram',
     'django_apscheduler',
     'django_crontab',
+    'debug_toolbar',
 ]
 
 MY_APPS = [
@@ -47,7 +49,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    "allauth.account.middleware.AccountMiddleware",
+
+    'allauth.account.middleware.AccountMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 
 ]
 
@@ -111,6 +115,12 @@ STATIC_URL = 'portal.static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [BASE_DIR / 'portal/static']
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
