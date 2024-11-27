@@ -8,7 +8,7 @@
 <h3> Свежие публикации за неделю </h3>
 <ul>
     {% for post in posts %}
-        <li> <a> href="{{ link }}/detail/{{ post.id }}">{{ post.header }}</a></li>
+        <li> <a href="{{ link }}{% url 'portal:detail_news' post.pk %}">{{ post.header }}</a></li>
     {% endfor %}
 </ul>
 </body>

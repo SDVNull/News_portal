@@ -9,6 +9,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .filters import NewsFilter
 from .forms import PostForm
 from .models import Post, Category, Subscription
+from .tasks import send_emails, send_emails_weekly
 
 
 class NewsList(ListView):
@@ -43,10 +44,10 @@ class PublicationCreate(PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         _var = form.save(commit=False)
-        if self.request.path.split('/')[1] == 'news':
-            _var.field_choice = "NW"
-        elif self.request.path.split('/')[1] == 'article':
+        if self.request.path.split('/')[1] == 'article':
             _var.field_choice = "AR"
+        _var.save()
+        send_emails.delay(_var.id)
         return super().form_valid(form)
 
 
